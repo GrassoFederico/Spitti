@@ -1,0 +1,25 @@
+{
+  "name": "spitti",
+  "version": "0.0.0",
+  "description": "A simple colors utility tool",
+  "main": "./dist/spitti.js",
+  "scripts": {
+    "test": "mocha --require ts-node/register tests/**/*.spec.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GrassoFederico/Spitti.git"
+  },
+  "keywords": [
+    "simple",
+    "colors",
+    "utility",
+    "tool"
+  ],
+  "author": "Federico Grasso",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GrassoFederico/Spitti/issues"
+  },
+  "homepage": "https://github.com/GrassoFederico/Spitti#readme"
+}
