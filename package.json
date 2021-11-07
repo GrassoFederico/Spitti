@@ -1,6 +1,6 @@
 {
   "name": "spitti",
-  "version": "0.0.0",
+  "version": "0.4.2",
   "description": "A simple colors utility tool",
   "main": "./dist/spitti.js",
   "scripts": {
