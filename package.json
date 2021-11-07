@@ -4,7 +4,9 @@
   "description": "A simple colors utility tool",
   "main": "./dist/spitti.js",
   "scripts": {
-    "test": "mocha --require ts-node/register tests/**/*.spec.ts"
+    "test": "mocha --require ts-node/register tests/**/*.spec.ts",
+    "dev": "webpack --config webpack.dev.js",
+    "prod": "webpack --config webpack.prod.js"
   },
   "repository": {
     "type": "git",
@@ -21,5 +23,12 @@
   "bugs": {
     "url": "https://github.com/GrassoFederico/Spitti/issues"
   },
-  "homepage": "https://github.com/GrassoFederico/Spitti#readme"
+  "homepage": "https://github.com/GrassoFederico/Spitti#readme",
+  "devDependencies": {
+    "path": "^0.12.7",
+    "ts-loader": "^9.2.6",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.4.0",
+    "webpack-merge": "^5.8.0"
+  }
 }
