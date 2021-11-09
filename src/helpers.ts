@@ -1,3 +1,12 @@
+export const RGB_SHORT_SIZE = "(0,0,0)".length
+export const RGB_FULL_SIZE = "(255,255,255)".length
+
+export const HEX_SHORT_SIZE = "FFF".length 
+export const HEX_FULL_SIZE = "FFFFFF".length
+
+export const FORMAT_HEX = "HEX"
+export const FORMAT_RGB = "RGB"
+
 const RGB_RADIX = 10
 const HEX_RADIX = 16 
 
@@ -10,11 +19,6 @@ const RGB_REGEX = /[\d]+/g
 const HEX_SHORT_SIZE_REGEX = /[\w]{1}/g
 const HEX_FULL_SIZE_REGEX = /[\w]{2}/g
 
-export const RGB_SHORT_SIZE = "(0,0,0)".length
-export const RGB_FULL_SIZE = "(255,255,255)".length
-
-export const HEX_SHORT_SIZE = "FFF".length 
-export const HEX_FULL_SIZE = "FFFFFF".length
 
 export function rgbToHex( rgb: string, shortMode: boolean = false ): string|Error
 {
