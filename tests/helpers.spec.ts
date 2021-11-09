@@ -1,7 +1,7 @@
-import { rgbToHex, hexToRgb, HEX_SHORT_SIZE, isValidRgb, isValidHex } from "../src/helpers"
+import { rgbToHex, hexToRgb, isValidRgb, isValidHex } from "../src/helpers"
 
 var assert = require('assert')
-var hex = "#F00"
+var hex = "#FF0000"
 var rgb = "rgb(255, 0, 0)"
 
 describe('RGB', function() {
@@ -32,7 +32,7 @@ describe('Convertion Functions', function() {
     
     it(`should be ${hex}`, function() {
       
-      assert.equal( rgbToHex( rgb, (hex.length === ("#".length + HEX_SHORT_SIZE)) ), hex )
+      assert.equal( rgbToHex( rgb ), hex )
     })
   })
 

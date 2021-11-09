@@ -18,51 +18,20 @@ const RGB_REGEX = /[\d]+/g
 const HEX_SHORT_SIZE_REGEX = /[\w]{1}/g
 const HEX_FULL_SIZE_REGEX = /[\w]{2}/g
 
-export type response = {
+export type Response = {
     result: boolean,
     message: string
 }
 
-export function rgbToHex( rgb: string, shortMode: boolean = false ): string|Error
+export function rgbToHex( rgb: string ): string|Error
 {
-    let getHex = (rgb: string, shortMode: boolean = false) => {
+    validateColorCode( rgb, isValidRgb )
 
-        let match = rgb.match( RGB_REGEX )
-
-        return match ? match.map( (value: string) => { 
-            let hexCode = parseInt(value).toString( HEX_RADIX ).toUpperCase()
-
-            if( hexCode.length === HEX_SINGLE_DIGIT_SIZE )
-                hexCode = `0${hexCode}`
-
-            if( shortMode )
-                hexCode = hexCode.substr(0, HEX_SINGLE_DIGIT_SIZE)
-
-            return hexCode
-
-        }).join('') : ''
-    }
-
-    let response: response
-
-    if( !(response = isValidRgb( rgb )).result )
-        return new Error( response.message )
-
-    let hex = getHex( rgb, shortMode )
-
-    if( hex.length )
-        return `${HEX_START_STRING}${hex}`
-    else
-        return new Error(`Cannot convert ${rgb} into hex format`)
+    return convert( convertToHex, rgb )
 }
 
-export function isValidRgb( rgb: string ): response
+export function isValidRgb( rgb: string ): Response
 {
-    let strictRgbCode = (rgb: string) => {
-
-        return rgb.split(' ').join('')
-    }
-
     rgb = strictRgbCode( rgb )
 
     if( !rgb.startsWith( RGB_START_STRING ) )
@@ -76,25 +45,49 @@ export function isValidRgb( rgb: string ): response
 
 export function hexToRgb( hex: string ): string|Error
 {
-    let getHexFullSize = (hex: string) => {
+    validateColorCode( hex, isValidHex )
 
-        let match = hex.match( HEX_SHORT_SIZE_REGEX )
-        
-        return match ? match.map( (value: string) => { return value.repeat(2) }).join('') : ''
-    }
+    return convert( convertToRgb, hex )
+}
 
-    let getRgb = (hex: string) => {
+export function isValidHex( hex: string ): Response
+{
+    if( !hex.startsWith( HEX_START_STRING ) )
+        return {"result": false, "message": `${hex} is not a valid hex format`}
 
-        let match = hex.match( HEX_FULL_SIZE_REGEX )
+    if( !(( hex.length === realHexSize( HEX_FULL_SIZE ) ) || ( hex.length === realHexSize( HEX_SHORT_SIZE ) )) )
+        return {"result": false, "message": `${hex} has not a valid size`}
 
-        return match ? match.map( (value: string) => { return parseInt( value, HEX_RADIX ) } ).join(', ') : ''
-    }
+    return {"result": true, "message": `${hex} is valid Hex code`}
+}
 
-    let response: response
+function validateColorCode( code: string, callback: CallableFunction ): void|Error 
+{
+    let response: Response
 
-    if( !(response = isValidHex( hex )).result )
+    if( !(response = callback( code )).result )
         return new Error( response.message )
 
+    return;
+}
+
+function convert( callback: CallableFunction, ...args: any ): string|Error 
+{
+    return callback(...args)
+}
+
+function convertToHex( rgb: string ): string|Error
+{
+    let hex = getHex( rgb )
+
+    if( hex.length )
+        return `${HEX_START_STRING}${hex}`
+    else
+        return new Error(`Cannot convert ${rgb} into hex format`)
+}
+
+function convertToRgb( hex: string ): string|Error
+{
     if( hex.length === realHexSize( HEX_SHORT_SIZE ) )
         hex = getHexFullSize( hex )
     
@@ -109,20 +102,9 @@ export function hexToRgb( hex: string ): string|Error
         return new Error(`Cannot convert ${hex} into RGB format`)
 }
 
-export function isValidHex( hex: string ): response
+function strictRgbCode( rgb: string ): string 
 {
-    if( !hex.startsWith( HEX_START_STRING ) )
-        return {"result": false, "message": `${hex} is not a valid hex format`}
-
-    if( !(( hex.length === realHexSize( HEX_FULL_SIZE ) ) || ( hex.length === realHexSize( HEX_SHORT_SIZE ) )) )
-        return {"result": false, "message": `${hex} has not a valid size`}
-
-    return {"result": true, "message": `${hex} is valid Hex code`}
-}
-
-export function toRadix( number: string, radix: number ): number
-{
-    return parseInt( number, radix )
+    return rgb.split(' ').join('')
 }
 
 function realRgbSize( size: number ): number
@@ -130,7 +112,37 @@ function realRgbSize( size: number ): number
     return RGB_START_STRING.length + size
 }
 
+function getHex(rgb: string): string
+{
+    let match = rgb.match( RGB_REGEX )
+
+    return match ? match.map( (value: string) => { 
+        let hexCode = parseInt(value).toString( HEX_RADIX ).toUpperCase()
+
+        if( hexCode.length === HEX_SINGLE_DIGIT_SIZE )
+            hexCode = `0${hexCode}`
+
+        return hexCode
+
+    }).join('') : ''
+}
+
 function realHexSize( size: number ): number
 {
     return HEX_START_STRING.length + size
+}
+
+function getHexFullSize(hex: string): string 
+{
+
+    let match = hex.match( HEX_SHORT_SIZE_REGEX )
+    
+    return match ? match.map( (value: string) => { return value.repeat(2) }).join('') : ''
+}
+
+function getRgb(hex: string): string 
+{
+    let match = hex.match( HEX_FULL_SIZE_REGEX )
+
+    return match ? match.map( (value: string) => { return parseInt( value, HEX_RADIX ) } ).join(', ') : ''
 }
