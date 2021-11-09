@@ -16,7 +16,7 @@ export const RGB_FULL_SIZE = "(255,255,255)".length
 export const HEX_SHORT_SIZE = "FFF".length 
 export const HEX_FULL_SIZE = "FFFFFF".length
 
-export function rgbToHex( rgb: string, shortMode: boolean = false ): string
+export function rgbToHex( rgb: string, shortMode: boolean = false ): string|Error
 {
     let strictRgbCode = (rgb: string) => {
 
@@ -44,20 +44,20 @@ export function rgbToHex( rgb: string, shortMode: boolean = false ): string
     rgb = strictRgbCode( rgb )
 
     if( !rgb.startsWith( RGB_START_STRING ) )
-        throw `${rgb} is not a valid rgb format`
+        return new Error(`${rgb} is not a valid rgb format`)
 
     if( !(( rgb.length >= realRgbSize( RGB_SHORT_SIZE ) ) || ( rgb.length <= realRgbSize( RGB_FULL_SIZE ) )) )
-        throw `${rgb} has not a valid size`
+        return new Error(`${rgb} has not a valid size`)
 
     let hex = getHex( rgb, shortMode )
 
     if( hex.length )
         return `${HEX_START_STRING}${hex}`
     else
-        throw `Cannot convert ${rgb} into hex format`
+        return new Error(`Cannot convert ${rgb} into hex format`)
 }
 
-export function hexToRgb( hex: string ): string
+export function hexToRgb( hex: string ): string|Error
 {
     let getHexFullSize = (hex: string) => {
 
@@ -74,23 +74,23 @@ export function hexToRgb( hex: string ): string
     }
 
     if( !hex.startsWith( HEX_START_STRING ) )
-        throw `${hex} is not a valid hex format`
+        return new Error(`${hex} is not a valid hex format`)
 
     if( !(( hex.length === realHexSize( HEX_FULL_SIZE ) ) || ( hex.length === realHexSize( HEX_SHORT_SIZE ) )) )
-        throw `${hex} has not a valid size`
+        return new Error(`${hex} has not a valid size`)
 
     if( hex.length === realHexSize( HEX_SHORT_SIZE ) )
         hex = getHexFullSize( hex )
     
     if( !hex.length )
-        throw `Cannot convert ${hex} into RGB format`
+        return new Error(`Cannot convert ${hex} into RGB format`)
 
     let rgb = getRgb( hex )
 
     if( rgb.length )
         return `${RGB_START_STRING}(${rgb})`
     else
-        throw `Cannot convert ${hex} into RGB format`
+        return new Error(`Cannot convert ${hex} into RGB format`)
 }
 
 export function toRadix( number: string, radix: number ): number
