@@ -25,7 +25,10 @@ export type Response = {
 
 export function rgbToHex( rgb: string ): string|Error
 {
-    validateColorCode( rgb, isValidRgb )
+    let response = validateColorCode( rgb, isValidRgb )
+
+    if( response instanceof Error )
+        return response
 
     return convert( convertToHex, rgb )
 }
@@ -33,10 +36,10 @@ export function rgbToHex( rgb: string ): string|Error
 export function isValidRgb( rgb: string ): Response
 {
     rgb = strictRgbCode( rgb )
-
+    
     if( !rgb.startsWith( RGB_START_STRING ) )
         return {"result": false, "message": `${rgb} is not a valid rgb format`}
-
+    
     if( !(( rgb.length >= realRgbSize( RGB_SHORT_SIZE ) ) || ( rgb.length <= realRgbSize( RGB_FULL_SIZE ) )) )
         return {"result": false, "message": `${rgb} has not a valid size`}
 
@@ -45,7 +48,10 @@ export function isValidRgb( rgb: string ): Response
 
 export function hexToRgb( hex: string ): string|Error
 {
-    validateColorCode( hex, isValidHex )
+    let response = validateColorCode( hex, isValidHex )
+
+    if( response instanceof Error )
+        return response
 
     return convert( convertToRgb, hex )
 }
