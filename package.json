@@ -3,10 +3,13 @@
   "version": "0.7.5",
   "description": "A simple colors utility tool",
   "main": "./dist/spitti.js",
+  "types": "./dist/spitti.d.ts",
+  "files": [
+    "/dist"
+  ],
   "scripts": {
     "test": "mocha --require ts-node/register tests/**/*.spec.ts",
-    "dev": "webpack --config webpack.dev.js",
-    "prod": "webpack --config webpack.prod.js"
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
