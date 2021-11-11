@@ -1,7 +1,8 @@
 import { Color } from "../src/color"
+import jsonPalette from '../src/palette.json'
 
 var assert = require('assert')
-var palette = require('../src/palette')
+var palette: any = jsonPalette 
 
 describe( "Palette colors", function() {
 

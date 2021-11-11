@@ -1,4 +1,4 @@
-module.exports = {
+{
     "black": {"hex": "#000000", "rgb": "rgb(0, 0, 0)"},
     "silver": {"hex": "#C0C0C0", "rgb": "rgb(192, 192, 192)"},
     "gray": {"hex": "#808080", "rgb": "rgb(128, 128, 128)"},
@@ -145,5 +145,5 @@ module.exports = {
     "violet": {"hex": "#EE82EE", "rgb": "rgb(238, 130, 238)"},
     "wheat": {"hex": "#F5DEB3", "rgb": "rgb(245, 222, 179)"},
     "whitesmoke": {"hex": "#F5F5F5", "rgb": "rgb(245, 245, 245)"},
-    "yellowgreen": {"hex": "#9ACD32", "rgb": "rgb(154, 205, 50)"},
+    "yellowgreen": {"hex": "#9ACD32", "rgb": "rgb(154, 205, 50)"}
 }

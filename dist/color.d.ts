@@ -1,4 +1,5 @@
 export declare class Color {
+    private _palette;
     private _hex;
     private _rgb;
     constructor(color: string);
