@@ -1,8 +1,10 @@
 import { hexToRgb, isValidHex, isValidRgb, rgbToHex } from "./helpers"
-var palette = require('./palette')
+import palette from './palette.json'
 
 export class Color
 {
+    private _palette: any = palette
+
     private _hex: string|Error
     private _rgb: string|Error
 
@@ -16,12 +18,14 @@ export class Color
 
     set hex( color: string )
     {
-        this._hex = palette[color] ? palette[color].hex : ( isValidHex( color ).result ? color : rgbToHex( color ) )
+        this._hex = this._palette[color] ? 
+                    this._palette[color].hex : ( isValidHex( color ).result ? color : rgbToHex( color ) )
     }
 
     set rgb( color: string )
     {
-        this._rgb = palette[color] ? palette[color].rgb : ( isValidRgb( color ).result ? color : hexToRgb( color ) )
+        this._rgb = this._palette[color] ? 
+                    this._palette[color].rgb : ( isValidRgb( color ).result ? color : hexToRgb( color ) )
     }
 
     get hex(): string
